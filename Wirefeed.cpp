@@ -12,17 +12,18 @@ Wirefeed::Wirefeed(int feedStepPin, int feedDirPin)
   	_feedStepPin = feedStepPin;
   	_feedDirPin = feedDirPin;
   
-	//Initialize Output Pins
+  	//Initializing...
+	//Output Pins
   	pinMode(feedStepPin, OUTPUT);
   	pinMode(feedDirPin, OUTPUT);
 
-	//Initialize Public Variables
+	//Public Variables
 	//---State Machine
 	timeStep = 20;
 	stepCountForward = 0;
 	feedLength = 0;
 	
-	//Initialize Private Variables
+	//Private Variables
 	//---State Machine  
   	_feeding = false;
   	_feedDirection = 1;
@@ -52,6 +53,10 @@ void Wirefeed::off()
 
 void Wirefeed::update()
 {
+  if (_stepCount >= feedLength) {
+  	off();
+  	feedLength = 0;
+  }
   if (_feeding) {
   	int thisTime = millis();
   	int elapsedTime = thisTime - _lastTime;
@@ -83,4 +88,8 @@ void Wirefeed::setDirection(int feedDirection) {
 	_feedDirection = feedDirection;
 	digitalWrite(_feedDirPin, _feedDirection);
 	
+}
+
+void Wirefeed::setFeedLength(int inputFeedLength) {
+	feedLength = inputFeedLength;
 }

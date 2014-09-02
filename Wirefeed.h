@@ -16,6 +16,7 @@ class Wirefeed
     void setTimeStep(int);
     void setDirection(int);
     void update();
+    void setFeedLength(int);
     
     //State Machine Variables
     int timeStep;
